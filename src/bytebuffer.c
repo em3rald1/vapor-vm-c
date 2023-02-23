@@ -53,3 +53,8 @@ uint32_t bytebuffer_read32(bytebuffer * buf, int addr) {
     uint16_t lower = bytebuffer_read16(buf, addr+2);
     return (upper << 16) | lower;
 }
+void bytebuffer_print(bytebuffer * buf) {
+    for(int i = 0; i < buf->ptr; i++) {
+        printf("%02x ", buf->data[i]);
+    }
+}

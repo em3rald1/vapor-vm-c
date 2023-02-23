@@ -1,15 +1,36 @@
 #include "../include/lexer.h"
-#include <stdio.h>
+#include "../include/compiler.h"
+#include "../include/fileutil.h"
+#include "../include/runtime.h"
 
-int main() {
-    const char * src = "MOV R1 54\n.label1\nX 514 132\nJMP .label1";
-    printf("SOURCE:\n%s\n", src);
-    lexer * lex = lexer_create(src);
-    lexer_tokenize(lex);
-    printf("Tokenizing finished\n");
-    printf("TOKENS:\n");
-    for(int i = 0; i < lex->toklist->ptr; i++) {
-        printf("<Token type=%d, value=%p, char=%d, line=%d>\n", lex->toklist->toks[i]->type, lex->toklist->toks[i]->value, lex->toklist->toks[i]->start, lex->toklist->toks[i]->line);
+int main(int argc, char ** argv) {
+    if(argc < 2) {
+        printf("Correct use: %s (compile/run) (file path)\n", argv[0]);
+        return 0;
     }
-    lexer_destroy(lex);
+    if(strcmp(argv[1], "compile") == 0) {
+        const char * src = readfile(argv[2]);
+        lexer * lex = lexer_create(src);
+        lexer_tokenize(lex);
+
+        bytebuffer * buf = compile(lex->toklist);
+        
+        if(argc > 3) {
+            bytebuffer_write_to_file(argv[3], buf);
+        } else {
+            char * default_path = "./a.out";
+            bytebuffer_write_to_file(default_path, buf);
+        }
+        return 0;
+    } else if(strcmp(argv[1], "run") == 0) {
+        bytebuffer * buf = readbuf_from_file(argv[2]);
+        
+        vmstate * state = vmstate_create(0xff);
+
+        load(state, buf, 0);
+        
+        execute(state);
+        return 0;
+    }
+    
 }

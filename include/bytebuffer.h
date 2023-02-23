@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
 
 struct _bytebuffer {
     uint8_t * data;
@@ -26,5 +27,6 @@ uint8_t bytebuffer_read8(bytebuffer * buf, int addr);
 uint16_t bytebuffer_read16(bytebuffer * buf, int addr);
 uint32_t bytebuffer_read32(bytebuffer * buf, int addr);
 
+void bytebuffer_print(bytebuffer * buf);
 
 #endif // VAPOR_VM_BYTEBUFFER_H

@@ -57,6 +57,7 @@ void lexer_tokenize(lexer * lex) {
                     
                 }
                 x[xptr++] = lex->src[lex->ptr++];
+                x[xptr] = 0;
                 cindex++;
             }
             token * tok = (token*)malloc(sizeof(token));
@@ -77,6 +78,7 @@ void lexer_tokenize(lexer * lex) {
                     
                 }
                 x[xptr++] = lex->src[lex->ptr++];
+                x[xptr] = 0;
                 cindex++;
             }
             token * tok = (token*)malloc(sizeof(token));
@@ -88,7 +90,7 @@ void lexer_tokenize(lexer * lex) {
         }
     }
     token * tok = (token*)malloc(sizeof(token));
-    tok->type = EOF;
+    tok->type = _EOF;
     tok->start = cindex;
     tok->line = lindex;
     tok->value = (void*)NULL;

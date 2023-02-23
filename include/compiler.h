@@ -4,6 +4,11 @@
 #include "bytebuffer.h"
 #include "bytecode.h"
 #include "token.h"
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
 
 bytebuffer * compile(tokenlist * list);
 

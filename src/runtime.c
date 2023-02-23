@@ -1,8 +1,8 @@
 #include "../include/runtime.h"
 #include <stdio.h>
 void load(vmstate * state, bytebuffer * data, int offset) {
-    for(int i = 0; i < data->size; i++) {
-        if(state->memory->size < offset+i) {
+    for(int i = 0; i < data->ptr; i++) {
+        if(state->memory->size > offset+i) {
             state->memory->data[offset+i] = data->data[i];
         }
     }
