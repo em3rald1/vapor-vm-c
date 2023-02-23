@@ -16,3 +16,5 @@ ${EXEC}:
 
 clean:
 	rm ${OBJ} ${EXEC}
+
+rebuild: clean all

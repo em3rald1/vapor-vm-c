@@ -146,8 +146,15 @@ int step(vmstate * state) {
             break;
         }
         case POP8: {
-            uint32_t addr = pop32(state);
-            push8(state, state->memory->data[addr]);
+            pop8(state);
+            break;
+        }
+        case POP16: {
+            pop16(state);
+            break;
+        }
+        case POP32: {
+            pop32(state);
             break;
         }
         case HLT: {

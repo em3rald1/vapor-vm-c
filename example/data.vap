@@ -1,4 +1,2 @@
-push byte 5
-push byte 6
-add byte
+
 hlt

@@ -41,7 +41,7 @@ void lexer_tokenize(lexer * lex) {
             token * tok = (token*)malloc(sizeof(token));
             tok->type = NUMBER;
             tok->start = cstart;
-            tok->value = (void*)x;
+            tok->value = (void*)(size_t)x; // (size_t) added here to remove warnings
             tok->line = lindex;
             tokenlist_push(lex->toklist, tok);
         } else if(c == '.') {

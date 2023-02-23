@@ -35,7 +35,7 @@ bytebuffer * compile(tokenlist * list) {
                 token * sizetok = list->toks[++i];
                 int size = tosize(sizetok->value);
                 token * value = list->toks[++i];
-                int ivalue = (int)value->value;
+                int ivalue = (int)(size_t)value->value; // (size_t added to remove warnings)
                 if(size == 1) {
                     bytebuffer_push(out, PUSH8);
                     bytebuffer_push(out, ivalue & 0xff);
@@ -78,6 +78,94 @@ bytebuffer * compile(tokenlist * list) {
                 }
             } else if(strcmp(tok->value, "hlt") == 0) {
                 bytebuffer_push(out, HLT);
+            } else if(strcmp(tok->value, "sub") == 0) {
+                token * sizetok = list->toks[++i];
+                int size = tosize(sizetok->value);
+                switch(size) {
+                    case 1: {
+                        bytebuffer_push(out, SUB8);
+                        break;
+                    }
+                    case 2: {
+                        bytebuffer_push(out, SUB16);
+                        break;
+                    }
+                    case 4: {
+                        bytebuffer_push(out, SUB32);
+                        break;
+                    }
+                    default: {
+                        printf("Type %s is not supported\n", sizetok->value);
+                        exit(1);
+                        break;
+                    }
+                }
+            } else if(strcmp(tok->value, "store") == 0) {
+                token * sizetok = list->toks[++i];
+                int size = tosize(sizetok->value);
+                switch(size) {
+                    case 1: {
+                        bytebuffer_push(out, STR8);
+                        break;
+                    }
+                    case 2: {
+                        bytebuffer_push(out, STR16);
+                        break;
+                    }
+                    case 4: {
+                        bytebuffer_push(out, STR32);
+                        break;
+                    }
+                    default: {
+                        printf("Type %s is not supported\n", sizetok->value);
+                        exit(1);
+                        break;
+                    }
+                }
+            } else if(strcmp(tok->value, "load") == 0) {
+                token * sizetok = list->toks[++i];
+                int size = tosize(sizetok->value);
+                switch(size) {
+                    case 1: {
+                        bytebuffer_push(out, LOD8);
+                        break;
+                    }
+                    case 2: {
+                        bytebuffer_push(out, LOD16);
+                        break;
+                    }
+                    case 4: {
+                        bytebuffer_push(out, LOD32);
+                        break;
+                    }
+                    default: {
+                        printf("Type %s is not supported\n", sizetok->value);
+                        exit(1);
+                        break;
+                    }
+                }
+            } else if(strcmp(tok->value, "pop") == 0) {
+                token * sizetok = list->toks[++i];
+                int size = tosize(sizetok->value);
+                switch(size) {
+                    case 1: {
+                        bytebuffer_push(out, POP8);
+                        break;
+                    }
+                    case 2: {
+                        bytebuffer_push(out, POP16);
+                        break;
+                    }
+                    case 4: {
+                        bytebuffer_push(out, POP32);
+                        break;
+                    }
+                    default: {
+                        printf("Type %s is not supported\n", sizetok->value);
+                        exit(1);
+                        break;
+                    }
+                }
             }
         }
     }
