@@ -169,3 +169,15 @@ void execute(vmstate * state) {
         res = step(state);
     }
 }
+
+void runtime_print_stack(vmstate * state, int n) {
+    printf("Stack hexdump:");
+    int start = state->memory->size - n;
+    for(int i = 0; i < n; i++) {
+        if(i % 16 == 0) {
+            printf("\n%08x: ", i+start);
+        }
+        printf("%02x ", state->memory->data[i+start]);
+    }
+    printf("\n");
+}

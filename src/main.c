@@ -25,12 +25,13 @@ int main(int argc, char ** argv) {
     } else if(strcmp(argv[1], "run") == 0) {
         bytebuffer * buf = readbuf_from_file(argv[2]);
         
-        vmstate * state = vmstate_create(0xff);
+        vmstate * state = vmstate_create(0xffff); // may be variable
 
         load(state, buf, 0);
         
         execute(state);
+
+        runtime_print_stack(state, 32); // may be variable on debug
         return 0;
     }
-    
 }

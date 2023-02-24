@@ -22,5 +22,7 @@ uint32_t pop32(vmstate * state);
 int step(vmstate * state);
 void execute(vmstate * state);
 
+void runtime_print_stack(vmstate * state, int n);
+
 
 #endif

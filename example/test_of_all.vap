@@ -1,0 +1,16 @@
+push byte 5
+push byte 3
+add byte
+pop byte
+
+push word 512
+pop word
+
+push dword 600
+push word 15
+store word
+
+push dword 600
+load word
+
+hlt
